@@ -1,0 +1,67 @@
+<!--  
+Stateless Designer statemachine.
+For more information: http://statelessdesigner.codeplex.com/
+-->
+<statemachine xmlns="http://statelessdesigner.codeplex.com/Schema">
+  <settings>
+    <itemname>TestMachine</itemname>
+    <namespace>App.ServiceInterface</namespace>
+    <class>public</class>
+  </settings>
+  <triggers>     
+	<trigger>Reject</trigger>
+    	<trigger>Opened</trigger>
+    	<trigger>Validate</trigger>
+	<trigger>CheckLicence</trigger>
+	<trigger>CheckDetails</trigger>
+	<trigger>PrintLabel</trigger>
+	<trigger>ShipItem</trigger>
+	<trigger>ReceiptConfirmed</trigger>
+	<trigger>Close</trigger>
+	<trigger>RejectOutright</trigger>
+  </triggers>
+  <states>     
+    	<state start="yes">New</state>
+    	<state>Drafted</state>
+    	<state>Validated</state>
+    	<state>LicenceChecked</state>
+    	<state>DetailsChecked</state>
+    	<state>LabelPrinted</state>
+    	<state>ItemShipped</state>
+ 	<state>ReportedLost</state>
+    	<state>ReceiptConfirmed</state>
+    	<state>Closed</state>
+<state>Rejected</state>
+
+  </states>
+  <transitions>
+    	<transition trigger="Accept" from="New" to="Drafted" />
+    	<transition trigger="Accept" from="Drafted" to="Validated" />
+	<transition trigger="Accept" from="Validated" to="LicenceChecked" />
+	<transition trigger="Accept" from="LicenceChecked" to="DetailsChecked" />
+	<transition trigger="Accept" from="DetailsChecked" to="LabelPrinted" />
+	<transition trigger="Accept" from="LabelPrinted" to="ItemShipped" />
+	<transition trigger="Accept" from="ItemShipped" to="ReceiptConfirmed" />
+	<transition trigger="Lost" from="ItemShipped" to="ReportedLost" />
+<transition trigger="Accept" from="ReportedLost" to="Closed" />
+
+	<transition trigger="Accept" from="ReceiptConfirmed" to="Closed" />
+
+	<transition trigger="Reject" from="Validated" to="Drafted" />
+	<transition trigger="Reject" from="LicenceChecked" to="Validated" />
+	<transition trigger="Reject" from="DetailsChecked" to="LicenceChecked" />
+	<transition trigger="Reject" from="LabelPrinted" to="DetailsChecked" />
+
+	<transition trigger="RejectOutright" from="Drafted" to="Rejected" />
+	<transition trigger="RejectOutright" from="Validated" to="Rejected" />
+	<transition trigger="RejectOutright" from="LicenceChecked" to="Rejected" />
+	<transition trigger="RejectOutright" from="DetailsChecked" to="Rejected" />
+	<transition trigger="RejectOutright" from="LabelPrinted" to="Rejected" />
+	<transition trigger="RejectOutright" from="DetailsChecked" to="Rejected" />
+
+
+
+
+
+  </transitions>
+</statemachine>
